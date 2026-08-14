@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Formulário oficial de candidatura para a equipe da Rede Wanted.">
+  <meta name="theme-color" content="#0d0d0f">
+  <title>Rede Wanted • Recrutamento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page-noise"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">W</div>
+      <div>
+        <strong>WANTED<span>MC</span></strong>
+        <small>REDE WANTED</small>
+      </div>
+    </div>
+
+    <a class="site-link" href="https://redewanted.com.br" target="_blank" rel="noopener">
+      redewanted.com.br
+    </a>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <div class="eyebrow">RECRUTAMENTO OFICIAL</div>
+      <h1>Faça parte da equipe<br><span>Rede Wanted</span></h1>
+      <p>
+        Procuramos pessoas responsáveis, maduras e presentes para ajudar a manter
+        a comunidade organizada e oferecer uma boa experiência aos jogadores.
+      </p>
+
+      <div class="hero-badges">
+        <span>⚔️ RankUP 1.8</span>
+        <span>🛡️ Moderação</span>
+        <span>💬 Comunidade</span>
+      </div>
+    </section>
+
+    <section class="form-card">
+      <div class="warning">
+        <div class="warning-icon">!</div>
+        <div>
+          <strong>Uso de IA é proibido nesta candidatura.</strong>
+          <p>
+            Responda com suas próprias palavras. Respostas geradas, copiadas ou claramente
+            produzidas por inteligência artificial podem resultar em desqualificação imediata.
+          </p>
+        </div>
+      </div>
+
+      <div class="form-head">
+        <div>
+          <span class="step-label">ETAPA <b id="stepNumber">1</b> DE 5</span>
+          <h2 id="stepTitle">Informações básicas</h2>
+        </div>
+        <div class="progress-meta"><span id="progressText">20%</span></div>
+      </div>
+
+      <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <form id="staffForm" action="https://formspree.io/f/xaewbvjq" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="Nova candidatura Staff • Rede Wanted">
+        <input type="hidden" name="origem" value="Site de recrutamento Rede Wanted">
+
+        <!-- Etapa 1 -->
+        <section class="form-step active" data-step="1" data-title="Informações básicas">
+          <div class="grid two">
+            <label class="field">
+              <span>Nick no Minecraft *</span>
+              <input type="text" name="nick_minecraft" maxlength="16" autocomplete="off" required placeholder="Ex.: DuuDuh">
+            </label>
+
+            <label class="field">
+              <span>Nome *</span>
+              <input type="text" name="nome" maxlength="60" autocomplete="name" required placeholder="Seu primeiro nome">
+            </label>
+
+            <label class="field">
+              <span>Idade *</span>
+              <input type="number" name="idade" min="13" max="99" required placeholder="Ex.: 18">
+            </label>
+
+            <label class="field">
+              <span>Discord *</span>
+              <input type="text" name="discord" maxlength="60" required placeholder="Ex.: duuduh">
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Há quanto tempo você joga Minecraft? *</span>
+            <input type="text" name="tempo_minecraft" maxlength="120" required placeholder="Conte de forma breve">
+          </label>
+
+          <label class="field">
+            <span>Há quanto tempo conhece ou joga na Rede Wanted?</span>
+            <input type="text" name="tempo_redewanted" maxlength="160" placeholder="Se for novo, pode informar isso">
+          </label>
+        </section>
+
+        <!-- Etapa 2 -->
+        <section class="form-step" data-step="2" data-title="Experiência">
+          <label class="field">
+            <span>Já fez parte da staff de outro servidor? *</span>
+            <select name="ja_foi_staff" required>
+              <option value="">Selecione</option>
+              <option>Sim</option>
+              <option>Não</option>
+            </select>
+          </label>
+
+          <label class="field">
+            <span>Se sim, em quais servidores e quais cargos?</span>
+            <textarea name="experiencia_staff" rows="4" maxlength="900" placeholder="Servidor, cargo e por quanto tempo permaneceu na equipe."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Quais ferramentas ou comandos de moderação você conhece?</span>
+            <textarea name="conhecimento_moderacao" rows="4" maxlength="900" placeholder="Ex.: ban, mute, kick, vanish, logs, análise de denúncias..."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Como você avalia seu conhecimento sobre cheats e trapaças? *</span>
+            <select name="conhecimento_cheats" required>
+              <option value="">Selecione</option>
+              <option>Básico</option>
+              <option>Intermediário</option>
+              <option>Avançado</option>
+            </select>
+          </label>
+        </section>
+
+        <!-- Etapa 3 -->
+        <section class="form-step" data-step="3" data-title="Disponibilidade">
+          <div class="grid two">
+            <label class="field">
+              <span>Tempo disponível por dia *</span>
+              <select name="tempo_por_dia" required>
+                <option value="">Selecione</option>
+                <option>Até 1 hora</option>
+                <option>1 a 2 horas</option>
+                <option>2 a 4 horas</option>
+                <option>4 a 6 horas</option>
+                <option>Mais de 6 horas</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Período mais frequente *</span>
+              <select name="periodo" required>
+                <option value="">Selecione</option>
+                <option>Manhã</option>
+                <option>Tarde</option>
+                <option>Noite</option>
+                <option>Madrugada</option>
+                <option>Horários variados</option>
+              </select>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Quais dias da semana costuma estar disponível? *</span>
+            <input type="text" name="dias_disponiveis" maxlength="180" required placeholder="Ex.: segunda a sexta à noite; sábado e domingo à tarde">
+          </label>
+
+          <label class="field">
+            <span>Você estuda, trabalha ou possui compromissos fixos?</span>
+            <textarea name="rotina" rows="4" maxlength="700" placeholder="Explique apenas o necessário para entendermos sua disponibilidade."></textarea>
+          </label>
+        </section>
+
+        <!-- Etapa 4 -->
+        <section class="form-step" data-step="4" data-title="Situações de moderação">
+          <label class="field">
+            <span>Um amigo seu é flagrado quebrando uma regra. O que você faria? *</span>
+            <textarea name="situacao_amigo" rows="5" minlength="50" maxlength="1200" required placeholder="Explique sua decisão e como conduziria a situação."></textarea>
+            <small>Mínimo recomendado: 50 caracteres.</small>
+          </label>
+
+          <label class="field">
+            <span>Um jogador começa a provocar você no chat e tenta tirar sua paciência. Como reagiria? *</span>
+            <textarea name="situacao_provocacao" rows="5" minlength="50" maxlength="1200" required placeholder="Descreva como manteria a postura e aplicaria as regras."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Você recebe uma denúncia sem provas suficientes, mas acredita que o jogador está infringindo as regras. O que faria? *</span>
+            <textarea name="situacao_sem_provas" rows="5" minlength="50" maxlength="1200" required placeholder="Explique como investigaria e qual seria seu limite para aplicar uma punição."></textarea>
+          </label>
+        </section>
+
+        <!-- Etapa 5 -->
+        <section class="form-step" data-step="5" data-title="Candidatura final">
+          <label class="field">
+            <span>Por que você quer fazer parte da equipe da Rede Wanted? *</span>
+            <textarea name="porque_quer_staff" rows="5" minlength="80" maxlength="1500" required placeholder="Seja direto e responda com suas próprias palavras."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Por que deveríamos escolher você? *</span>
+            <textarea name="porque_escolher" rows="5" minlength="80" maxlength="1500" required placeholder="Conte o que você acredita que pode agregar à equipe."></textarea>
+          </label>
+
+          <label class="field">
+            <span>Existe algo importante que gostaria de acrescentar?</span>
+            <textarea name="observacoes" rows="4" maxlength="1000" placeholder="Opcional"></textarea>
+          </label>
+
+          <div class="checks">
+            <label class="check">
+              <input type="checkbox" name="confirmacao_veracidade" value="Concordo" required>
+              <span>Confirmo que todas as informações enviadas são verdadeiras.</span>
+            </label>
+
+            <label class="check">
+              <input type="checkbox" name="confirmacao_ia" value="Concordo" required>
+              <span>Confirmo que respondi por conta própria e não utilizei IA para produzir minhas respostas.</span>
+            </label>
+
+            <label class="check">
+              <input type="checkbox" name="confirmacao_regras" value="Concordo" required>
+              <span>Entendo que enviar a candidatura não garante entrada na equipe e aceito a decisão da administração.</span>
+            </label>
+          </div>
+        </section>
+
+        <div class="form-error" id="formError" role="alert"></div>
+
+        <div class="actions">
+          <button type="button" class="btn secondary" id="prevBtn" disabled>Voltar</button>
+          <button type="button" class="btn primary" id="nextBtn">Continuar</button>
+          <button type="submit" class="btn primary submit" id="submitBtn">
+            <span>Enviar candidatura</span>
+          </button>
+        </div>
+
+        <div class="draft-note">
+          <span>●</span> Suas respostas ficam salvas neste dispositivo enquanto você preenche.
+        </div>
+      </form>
+
+      <div class="success-state" id="successState" hidden>
+        <div class="success-icon">✓</div>
+        <h2>Candidatura enviada.</h2>
+        <p>
+          Sua resposta foi recebida pela equipe da Rede Wanted.
+          Aguarde a análise e evite pedir prioridade ou resultado no privado.
+        </p>
+        <div class="application-code" id="applicationCode"></div>
+      </div>
+    </section>
+
+    <section class="notes">
+      <div>
+        <span>01</span>
+        <h3>Responda com calma</h3>
+        <p>Não existe vantagem em responder rápido. Clareza e maturidade são mais importantes.</p>
+      </div>
+      <div>
+        <span>02</span>
+        <h3>Seja você mesmo</h3>
+        <p>Queremos conhecer sua forma de pensar, não respostas prontas ou textos artificiais.</p>
+      </div>
+      <div>
+        <span>03</span>
+        <h3>Aguarde a análise</h3>
+        <p>A administração poderá entrar em contato pelo Discord caso sua candidatura avance.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <strong>REDE WANTED</strong>
+    <span>© 2026 • Todos os direitos reservados.</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
