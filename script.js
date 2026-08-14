@@ -1,46 +1,64 @@
 (() => {
   const form = document.getElementById("staffForm");
   const steps = [...document.querySelectorAll(".form-step")];
+  const indicators = [...document.querySelectorAll(".step-nav-item")];
+
   const nextBtn = document.getElementById("nextBtn");
   const prevBtn = document.getElementById("prevBtn");
   const submitBtn = document.getElementById("submitBtn");
+  const submitLabel = submitBtn.querySelector(".submit-label");
+
   const progressBar = document.getElementById("progressBar");
-  const progressText = document.getElementById("progressText");
   const stepNumber = document.getElementById("stepNumber");
   const stepTitle = document.getElementById("stepTitle");
+  const stepHint = document.getElementById("stepHint");
   const errorBox = document.getElementById("formError");
+
   const successState = document.getElementById("successState");
   const applicationCode = document.getElementById("applicationCode");
 
+  const draftKey = "redewanted_staff_draft_pro_v1";
   let current = 0;
-  const draftKey = "redewanted_staff_draft_v1";
 
-  function render() {
-    steps.forEach((step, index) => step.classList.toggle("active", index === current));
+  function render({ scroll = true } = {}) {
+    steps.forEach((step, index) => {
+      step.classList.toggle("active", index === current);
+    });
 
-    const percent = Math.round(((current + 1) / steps.length) * 100);
+    indicators.forEach((item, index) => {
+      item.classList.toggle("active", index === current);
+      item.classList.toggle("done", index < current);
+    });
+
+    const percent = ((current + 1) / steps.length) * 100;
+
     progressBar.style.width = `${percent}%`;
-    progressText.textContent = `${percent}%`;
-    stepNumber.textContent = current + 1;
+    stepNumber.textContent = String(current + 1).padStart(2, "0");
     stepTitle.textContent = steps[current].dataset.title;
+    stepHint.textContent = steps[current].dataset.hint;
 
     prevBtn.disabled = current === 0;
-    nextBtn.style.display = current === steps.length - 1 ? "none" : "inline-block";
-    submitBtn.style.display = current === steps.length - 1 ? "inline-block" : "none";
+    nextBtn.style.display = current === steps.length - 1 ? "none" : "inline-flex";
+    submitBtn.style.display = current === steps.length - 1 ? "inline-flex" : "none";
+
     errorBox.textContent = "";
 
-    window.scrollTo({ top: document.querySelector(".form-card").offsetTop - 100, behavior: "smooth" });
+    if (scroll) {
+      document.querySelector(".application").scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
   }
 
-  function fieldsInStep(step) {
-    return [...step.querySelectorAll("input, textarea, select")];
+  function currentFields() {
+    return [...steps[current].querySelectorAll("input, textarea, select")];
   }
 
-  function validateStep() {
-    const fields = fieldsInStep(steps[current]);
+  function validateCurrentStep() {
     let firstInvalid = null;
 
-    fields.forEach(field => {
+    currentFields().forEach((field) => {
       field.classList.remove("invalid");
 
       if (!field.checkValidity()) {
@@ -50,7 +68,7 @@
     });
 
     if (firstInvalid) {
-      errorBox.textContent = "Revise os campos obrigatórios antes de continuar.";
+      errorBox.textContent = "Confira os campos obrigatórios antes de continuar.";
       firstInvalid.focus();
       return false;
     }
@@ -58,97 +76,128 @@
     return true;
   }
 
+  function saveDraft() {
+    const data = {};
+
+    [...form.elements].forEach((element) => {
+      if (!element.name || element.type === "hidden") return;
+
+      data[element.name] =
+        element.type === "checkbox"
+          ? element.checked
+          : element.value;
+    });
+
+    localStorage.setItem(draftKey, JSON.stringify(data));
+  }
+
+  function restoreDraft() {
+    try {
+      const data = JSON.parse(localStorage.getItem(draftKey) || "{}");
+
+      [...form.elements].forEach((element) => {
+        if (!element.name || !(element.name in data)) return;
+
+        if (element.type === "checkbox") {
+          element.checked = Boolean(data[element.name]);
+        } else {
+          element.value = data[element.name];
+        }
+      });
+    } catch (_) {
+      // Se o navegador limpar ou corromper o rascunho, o formulário segue normalmente.
+    }
+  }
+
+  function createProtocol() {
+    const datePart = new Date()
+      .toISOString()
+      .slice(2, 10)
+      .replaceAll("-", "");
+
+    const random = Math.random()
+      .toString(36)
+      .slice(2, 7)
+      .toUpperCase();
+
+    return `RW-${datePart}-${random}`;
+  }
+
   nextBtn.addEventListener("click", () => {
-    if (!validateStep()) return;
+    if (!validateCurrentStep()) return;
+
+    saveDraft();
+
     if (current < steps.length - 1) {
-      current++;
-      saveDraft();
+      current += 1;
       render();
     }
   });
 
   prevBtn.addEventListener("click", () => {
     if (current > 0) {
-      current--;
+      current -= 1;
       render();
     }
   });
 
-  function saveDraft() {
-    const data = {};
-    [...form.elements].forEach(el => {
-      if (!el.name || el.type === "hidden") return;
-      if (el.type === "checkbox") data[el.name] = el.checked;
-      else data[el.name] = el.value;
-    });
-    localStorage.setItem(draftKey, JSON.stringify(data));
-  }
-
-  function loadDraft() {
-    try {
-      const saved = JSON.parse(localStorage.getItem(draftKey) || "{}");
-      [...form.elements].forEach(el => {
-        if (!el.name || !(el.name in saved)) return;
-        if (el.type === "checkbox") el.checked = Boolean(saved[el.name]);
-        else el.value = saved[el.name];
-      });
-    } catch (_) {}
-  }
-
   form.addEventListener("input", () => {
-    clearTimeout(window.__draftTimer);
-    window.__draftTimer = setTimeout(saveDraft, 250);
-  });
+    clearTimeout(window.__wantedDraftTimer);
 
-  function makeApplicationCode() {
-    const now = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).slice(2, 6).toUpperCase();
-    return `WANTED-${now.slice(-5)}-${random}`;
-  }
+    window.__wantedDraftTimer = setTimeout(() => {
+      saveDraft();
+    }, 220);
+  });
 
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    if (!validateStep()) return;
-
-    // BLOQUEIO DE SEGURANÇA:
-    // Troque "SEU_FORM_ID" no index.html pelo ID real do seu formulário Formspree.
-    if (form.action.includes("SEU_FORM_ID")) {
-      errorBox.textContent = "O formulário ainda não foi conectado ao Formspree. Configure o SEU_FORM_ID antes de publicar.";
-      return;
-    }
+    if (!validateCurrentStep()) return;
 
     submitBtn.disabled = true;
-    submitBtn.querySelector("span").textContent = "Enviando...";
+    submitLabel.textContent = "Enviando...";
     errorBox.textContent = "";
 
-    const applicationId = makeApplicationCode();
+    const protocol = createProtocol();
     const formData = new FormData(form);
-    formData.append("id_candidatura", applicationId);
+    formData.append("protocolo", protocol);
 
     try {
       const response = await fetch(form.action, {
         method: "POST",
         body: formData,
-        headers: { "Accept": "application/json" }
+        headers: {
+          Accept: "application/json"
+        }
       });
 
-      if (!response.ok) throw new Error("Falha no envio");
+      if (!response.ok) {
+        throw new Error("Falha no envio");
+      }
 
       localStorage.removeItem(draftKey);
+
       form.hidden = true;
-      document.querySelector(".form-head").hidden = true;
-      document.querySelector(".progress-track").hidden = true;
+      document.querySelector(".application-top").hidden = true;
+      document.querySelector(".step-nav").hidden = true;
+      document.querySelector(".progress-line").hidden = true;
+
       successState.hidden = false;
-      applicationCode.textContent = `ID DA CANDIDATURA: ${applicationId}`;
-      successState.scrollIntoView({ behavior: "smooth", block: "center" });
-    } catch (error) {
-      errorBox.textContent = "Não foi possível enviar agora. Verifique sua conexão e tente novamente.";
+      applicationCode.textContent = protocol;
+
+      document.querySelector(".application").scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+    } catch (_) {
+      errorBox.textContent =
+        "Não foi possível enviar agora. Confira sua conexão e tente novamente.";
+
       submitBtn.disabled = false;
-      submitBtn.querySelector("span").textContent = "Enviar candidatura";
+      submitLabel.textContent = "Enviar candidatura";
     }
   });
 
-  loadDraft();
-  render();
+  restoreDraft();
+  render({ scroll: false });
 })();
