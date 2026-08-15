@@ -1,0 +1,23 @@
+REDEWANTED - FORMULÁRIO CONECTADO AO DISCORD
+
+Canal de destino: 1538144120248209498
+Rota configurada: https://api.redewanted.com.br/candidaturas
+
+ARQUIVOS DO SITE
+- index.html: contém o endereço público da API.
+- script.js: envia os dados ao bot, recebe o protocolo e mostra a confirmação.
+- style.css: inclui o campo antispam invisível sem alterar o visual.
+
+ANTES DE PUBLICAR
+1. Envie os três arquivos atualizados para a hospedagem do site.
+2. Instale a versão atualizada do bot.
+3. Garanta que api.redewanted.com.br possui HTTPS e encaminha para a porta do bot.
+4. Dê ao bot acesso ao canal e permissões para criar/enviar mensagens em tópicos.
+5. Reinicie o bot e use !formulariostatus.
+
+SEGURANÇA
+Não coloque token do bot nem URL de webhook no index.html ou script.js. Esses arquivos são públicos.
+O bot já valida origem, limite por IP, duplicidade, campos e tempo mínimo de preenchimento.
+
+Se o site não estiver em https://redewanted.com.br ou https://www.redewanted.com.br,
+adicione o domínio real em web_form.allowed_origins no config.yml do bot.
